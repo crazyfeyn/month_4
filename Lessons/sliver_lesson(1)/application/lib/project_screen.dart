@@ -157,17 +157,17 @@ class ProjectScreenState extends State<ProjectScreen> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text(
+                          const Text(
                             '\$120',
                             style: TextStyle(
                                 fontWeight: FontWeight.w600, fontSize: 16),
                           ),
                           IconButton(
                               onPressed: () {},
-                              icon: Icon(Icons.favorite_outline))
+                              icon: const Icon(Icons.favorite_outline))
                         ],
                       ),
-                      Text(
+                      const Text(
                         'Pull & bear men\'s',
                         style: TextStyle(
                             fontWeight: FontWeight.w600, fontSize: 14),
