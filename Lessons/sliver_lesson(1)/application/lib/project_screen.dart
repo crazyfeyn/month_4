@@ -133,9 +133,9 @@ class ProjectScreenState extends State<ProjectScreen> {
             sliver: SliverGrid(
               gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
                 maxCrossAxisExtent: 300.0,
+                childAspectRatio: 0.71,
                 mainAxisSpacing: 10.0,
                 crossAxisSpacing: 10.0,
-                childAspectRatio: 0.71,
               ),
               delegate: SliverChildBuilderDelegate(
                 (context, index) {
@@ -197,68 +197,71 @@ class ProjectScreenState extends State<ProjectScreen> {
               ),
             ),
           ),
-          SliverList(
-            delegate: SliverChildBuilderDelegate(
-              (BuildContext context, int index) {
-                return Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(17),
-                    gradient: const LinearGradient(
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
-                      colors: [
-                        Color.fromARGB(255, 0, 0, 0),
-                        Color.fromARGB(255, 27, 27, 27),
-                        Color.fromARGB(255, 48, 47, 47),
-                        Color.fromARGB(255, 55, 55, 55),
+          SliverPadding(
+            padding: const EdgeInsets.all(20),
+            sliver: SliverList(
+              delegate: SliverChildBuilderDelegate(
+                (BuildContext context, int index) {
+                  return Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(17),
+                      gradient: const LinearGradient(
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                        colors: [
+                          Color.fromARGB(255, 0, 0, 0),
+                          Color.fromARGB(255, 27, 27, 27),
+                          Color.fromARGB(255, 48, 47, 47),
+                          Color.fromARGB(255, 55, 55, 55),
+                        ],
+                      ),
+                    ),
+                    margin: const EdgeInsets.only(bottom: 20),
+                    height: 100,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Container(
+                          padding: const EdgeInsets.all(10),
+                          width: 230,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const Text(
+                                'Men\'s Fashion Collections',
+                                style: TextStyle(
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: 20,
+                                    color: Colors.white),
+                              ),
+                              Text(
+                                'Discount up to 60%',
+                                style: TextStyle(
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.w600,
+                                    color: Colors.grey.shade400),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Container(
+                          clipBehavior: Clip.hardEdge,
+                          decoration: const BoxDecoration(
+                              borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(20),
+                                  bottomLeft: Radius.circular(20))),
+                          child: Image.asset(
+                            'assets/image_4.png',
+                            width: 146,
+                            fit: BoxFit.cover,
+                          ),
+                        )
                       ],
                     ),
-                  ),
-                  margin: const EdgeInsets.only(bottom: 20),
-                  height: 100,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Container(
-                        padding: const EdgeInsets.all(10),
-                        width: 250,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const Text(
-                              'Men\'s Fashion Collections',
-                              style: TextStyle(
-                                  fontWeight: FontWeight.w600,
-                                  fontSize: 20,
-                                  color: Colors.white),
-                            ),
-                            Text(
-                              'Discount up to 60%',
-                              style: TextStyle(
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.w600,
-                                  color: Colors.grey.shade400),
-                            ),
-                          ],
-                        ),
-                      ),
-                      Container(
-                        clipBehavior: Clip.hardEdge,
-                        decoration: const BoxDecoration(
-                            borderRadius: BorderRadius.only(
-                                topLeft: Radius.circular(20),
-                                bottomLeft: Radius.circular(20))),
-                        child: Image.asset(
-                          'assets/image_4.png',
-                          width: 146,
-                          fit: BoxFit.cover,
-                        ),
-                      )
-                    ],
-                  ),
-                );
-              },
-              childCount: 50,
+                  );
+                },
+                childCount: 50,
+              ),
             ),
           ),
         ],
