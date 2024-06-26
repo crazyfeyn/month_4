@@ -44,17 +44,17 @@ class _HomeScreenState extends State<HomeScreen>
               builder: (context, child) {
                 return CustomPaint(
                   size: const Size(350, 400),
-                  painter: MyPainter(secBrushAnimation.value),
+                  painter: Painter(secBrushAnimation.value),
                 );
               })),
     );
   }
 }
 
-class MyPainter extends CustomPainter {
+class Painter extends CustomPainter {
   final double angle;
 
-  MyPainter(this.angle);
+  Painter(this.angle);
 
   @override
   void paint(Canvas canvas, Size size) {
