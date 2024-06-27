@@ -1,4 +1,5 @@
 import 'package:application/controller/cart_controller.dart';
+import 'package:application/controller/products_controller.dart';
 import 'package:application/models/product.dart';
 import 'package:application/views/widgets/product_item.dart';
 import 'package:flutter/material.dart';
@@ -51,9 +52,9 @@ class _CartScreenState extends State<CartScreen> {
                 )),
             TextButton(
                 onPressed: () {
-                  
+                  cartController.addOrder();
                 },
-                child: Text('Order'))
+                child: const Text('Order'))
           ],
         ));
   }

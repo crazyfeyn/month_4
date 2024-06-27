@@ -13,15 +13,5 @@ class Product extends ChangeNotifier {
     required this.price,
   });
 
-  List<Product> orderList = [];
-
-  // void addOrder(Product product) {
-  //   orderList.add(product);
-  //   notifyListeners();
-  // }
-
-  // void deleteOrder(Product product) {
-  //   orderList.remove(product);
-  //   notifyListeners();
-  // }
+  
 }

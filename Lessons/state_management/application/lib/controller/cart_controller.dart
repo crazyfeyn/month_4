@@ -9,6 +9,25 @@ class CartController extends ChangeNotifier {
     return _cart;
   }
 
+  Cart get orders {
+    return _orders;
+  }
+
+  final Cart _orders = Cart(
+    products: {},
+    totalPrice: 0,
+  );
+
+
+  void addOrder() {
+    if (_cart.products.isNotEmpty) {
+      _orders.products.addAll(_cart.products);
+      _orders.products.clear();
+      calculateTotal();
+      notifyListeners();
+    }
+  }
+
   void addToCart(Product product) {
     if (_cart.products.containsKey(product.id)) {
       _cart.products[product.id]['amount']++;
@@ -41,6 +60,15 @@ class CartController extends ChangeNotifier {
     _cart.totalPrice = total;
   }
 
+ void calculateTotalOrder() {
+    double total = 0;
+    _orders.products.forEach((key, value) {
+      total += value['product'].price * value['amount'];
+    });
+    _orders.totalPrice = total;
+  }
+
+
   bool isInCart(String productId) {
     return _cart.products.containsKey(productId);
   }
@@ -48,7 +76,4 @@ class CartController extends ChangeNotifier {
   int getProductAmount(String productId) {
     return _cart.products[productId]['amount'];
   }
-  
-  
-
 }

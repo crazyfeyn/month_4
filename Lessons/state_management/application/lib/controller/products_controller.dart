@@ -27,16 +27,4 @@ class ProductsController extends ChangeNotifier {
     return [..._list];
   }
 
-  void deleteProduct(Product product) {
-    _list.remove(product);
-    notifyListeners();
-  }
-
-  void addOrder(Product product) {
-    _list.add(product);
-  }
-
-  // void removeOrder(Product product) {
-  //   _list.add(product);
-  // }
 }

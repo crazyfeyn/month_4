@@ -23,8 +23,8 @@ class _ProductScreenState extends State<ProductScreen> {
     setState(() {
       _selectedIndex = index;
       if (_selectedIndex == 2) {
-        Navigator.push(
-            context, MaterialPageRoute(builder: (context) => const OrdersScreen()));
+        Navigator.push(context,
+            MaterialPageRoute(builder: (context) => const OrdersScreen()));
       }
     });
   }
@@ -70,7 +70,7 @@ class _ProductScreenState extends State<ProductScreen> {
         child: const Icon(Icons.person),
       ),
       bottomNavigationBar: BottomNavigationBar(
-        items: [
+        items: const [
           BottomNavigationBarItem(icon: Icon(Icons.home), label: 'home'),
           BottomNavigationBarItem(icon: Icon(Icons.home), label: 'home'),
           BottomNavigationBarItem(
