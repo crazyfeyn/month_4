@@ -28,6 +28,7 @@ class CartController extends ChangeNotifier {
 
     notifyListeners();
   }
+  
 
    void incrementProductCount(String id) {
     for (var i = 0; i < _productsinCart.length; i++) {

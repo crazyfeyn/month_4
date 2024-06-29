@@ -2,6 +2,7 @@ import 'package:application/controllers/cart_controller.dart';
 import 'package:application/controllers/product_controller.dart';
 import 'package:application/views/screens/product_detail_screen.dart';
 import 'package:application/views/screens/product_ready_to_buy_screen.dart';
+import 'package:application/views/widgets/first_category_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -23,6 +24,26 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: Drawer(
+          child: ListView(
+        children: [
+          InkWell(
+            onTap: () {
+              Navigator.pushReplacement(context,
+                  MaterialPageRoute(builder: (context) => const HomeScreen()));
+            },
+            child: ListTile(
+              title: Text('Home screen'),
+            ),
+          ),
+          InkWell(
+            onTap: () {},
+            child: ListTile(
+              title: Text('Admin'),
+            ),
+          )
+        ],
+      )),
       appBar: AppBar(
         title: const Text('Home Screen'),
       ),
@@ -31,7 +52,32 @@ class _HomeScreenState extends State<HomeScreen> {
         child: Consumer<ProductController>(
           builder: (context, productController, child) {
             return Column(
+
               children: [
+                SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Padding(
+              padding: const EdgeInsets.only(left: 10),
+              child: Row(
+                children: [
+                  Firstcategorywidget(
+                      categoryName: "living",
+                      imageUrl:
+                          'https://media.architecturaldigest.com/photos/64f71af50a84399fbdce2f6a/16:9/w_2560%2Cc_limit/Living%2520with%2520Lolo%2520Photo%2520Credit_%2520Life%2520Created%25204.jpg',
+                      name: 'Living Room'),
+                  Firstcategorywidget(
+                      categoryName: "wall",
+                      imageUrl:
+                          'https://foyr.com/learn/wp-content/uploads/2023/10/Best-wall-decor-idea-24-Tell-a-story-1024x768.jpg',
+                      name: 'Wall Decoration'),
+                  Firstcategorywidget(
+                      categoryName: "table",
+                      imageUrl:
+                          'https://jumanji.livspace-cdn.com/magazine/wp-content/uploads/2018/03/27162018/Table-decoration_tray.jpg',
+                      name: 'Table Decoration'),
+                ],
+              ),
+            ),),
                 SizedBox(
                   height: 150,
                   child: SingleChildScrollView(

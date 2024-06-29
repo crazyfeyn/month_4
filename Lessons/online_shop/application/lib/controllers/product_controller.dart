@@ -93,4 +93,14 @@ class ProductController extends ChangeNotifier {
     product.isLiked = !product.isLiked;
     notifyListeners();
   }
+
+   int productCategoryCount(String category) {
+    int count = 0;
+    for (var element in _productList) {
+      if (element.category == category) {
+        count++;
+      }
+    }
+    return count;
+  }
 }
