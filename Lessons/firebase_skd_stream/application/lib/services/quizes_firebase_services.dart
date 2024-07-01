@@ -6,4 +6,16 @@ class QuizesFirebaseServices {
   Stream<QuerySnapshot> getQuizes() async* {
     yield* _quizesCollection.snapshots();
   }
+
+  void addQuiz(String question, List<String> variants, int correctAnswer) {
+    _quizesCollection.add({
+      'question': question,
+      'variants': variants,
+      'correctAnswer': correctAnswer
+    });
+  }
+
+  void deleteQuiz(String id) {
+    _quizesCollection.doc(id).delete();
+  }
 }

@@ -1,5 +1,7 @@
 import 'package:application/controllers/quizes_controller.dart';
 import 'package:application/firebase_options.dart';
+import 'package:application/views/screens/create_quizes.dart';
+import 'package:application/views/screens/first_screen.dart';
 import 'package:application/views/screens/home_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -21,7 +23,7 @@ class MyApp extends StatelessWidget {
       create: (context) => QuizesController(),
       child: const MaterialApp(
         debugShowCheckedModeBanner: false,
-        home: HomeScreen(),
+        home: FirstScreen(),
       ),
     );
   }

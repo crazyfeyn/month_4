@@ -1,4 +1,3 @@
-
 import 'package:application/models/quizes.dart';
 import 'package:application/services/quizes_firebase_services.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -22,12 +21,23 @@ class QuizesController extends ChangeNotifier {
   }
 
   void responses(Quize quize, int index) {
-    print(quize.id);
     if (quize.correctAnswer == index) {
       _correctResponses.add(quize);
     } else {
       _incorrectResponses.add(quize);
     }
-    // notifyListeners();
+  }
+
+  void clearCorrectIncCorrects() {
+    _correctResponses.clear();
+    _incorrectResponses.clear();
+  }
+
+  void addQuiz(String question, List<String> variants, int correctAnswer) {
+    quizesFirebaseServices.addQuiz(question, variants, correctAnswer);
+  }
+
+  void deleteQuiz(String id) {
+    quizesFirebaseServices.deleteQuiz(id);
   }
 }

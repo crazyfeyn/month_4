@@ -1,3 +1,5 @@
+import 'package:application/views/screens/create_quizes.dart';
+import 'package:application/views/screens/first_screen.dart';
 import 'package:application/views/widgets/variant_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:application/controllers/quizes_controller.dart';
@@ -18,9 +20,7 @@ class _HomeScreenState extends State<HomeScreen> {
   int currentPageIndex = 0;
 
   void nextPage() {
-    // setState(() {
     currentPageIndex++;
-    // });
     pageController.nextPage(
         duration: const Duration(seconds: 1), curve: Curves.easeInOut);
   }
@@ -49,7 +49,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
             return Stack(children: [
               Positioned(
-                child: 
+                child:
                      Image.asset('assets/images/duolingo.gif',
                         height: 100, width: 100)
               ),
@@ -92,13 +92,15 @@ class _HomeScreenState extends State<HomeScreen> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Container(
+                          width: 280,
                           padding: const EdgeInsets.all(20),
                           decoration: BoxDecoration(
                               color: const Color.fromARGB(255, 54, 154, 57),
                               borderRadius: BorderRadius.circular(20),
                               border: Border.all(color: Colors.white)),
                           child: Text(
-                            "correct answers: ${quizesController.correctResponses.length}",
+                            "Correct answers: ${quizesController.correctResponses.length}",
+                            textAlign: TextAlign.center,
                             style: const TextStyle(
                               color: Colors.white,
                               fontSize: 22,
@@ -108,13 +110,15 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                         const SizedBox(height: 20),
                         Container(
+                          width: 280,
                           padding: const EdgeInsets.all(20),
                           decoration: BoxDecoration(
                               color: Colors.red,
                               borderRadius: BorderRadius.circular(20),
                               border: Border.all(color: Colors.white)),
                           child: Text(
-                            "correct answers: ${quizesController.incorrectResponses.length}",
+                            "Incorrect answers: ${quizesController.incorrectResponses.length}",
+                            textAlign: TextAlign.center,
                             style: const TextStyle(
                               color: Colors.white,
                               fontSize: 22,
@@ -127,6 +131,33 @@ class _HomeScreenState extends State<HomeScreen> {
                                 quizesController.incorrectResponses.length
                             ? Image.asset('assets/images/strong.gif', height: 300)
                             : Image.asset('assets/images/sad.gif', height: 400),
+                        const SizedBox(height: 20),
+                        InkWell(
+                            onTap: () {
+                              quizesController.clearCorrectIncCorrects();
+                              Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          const FirstScreen()));
+                            },
+                            child: Container(
+                              width: 280,
+                              padding: const EdgeInsets.all(20),
+                              decoration: BoxDecoration(
+                                  color: Colors.blue,
+                                  borderRadius: BorderRadius.circular(20),
+                                  border: Border.all(color: Colors.white)),
+                              child: const Text(
+                                'Cancel',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 22,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                            ))
                       ],
                     )));
                   }
