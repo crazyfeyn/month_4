@@ -22,7 +22,7 @@ class CartController extends ChangeNotifier {
           id: product.id,
           count: 1,
           imageUrl: product.imageUrl,
-          price: product.price,
+          price: product.price.toDouble(),
           title: product.title));
     }
 

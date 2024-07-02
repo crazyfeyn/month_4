@@ -1,7 +1,10 @@
 import 'package:application/models/product.dart';
+import 'package:application/services/product_services.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class ProductController extends ChangeNotifier {
+  final productServices = ProductServices();
   final List<Product> _productList = [
     Product(
       category: "living",
@@ -94,7 +97,7 @@ class ProductController extends ChangeNotifier {
     notifyListeners();
   }
 
-   int productCategoryCount(String category) {
+  int productCategoryCount(String category) {
     int count = 0;
     for (var element in _productList) {
       if (element.category == category) {
@@ -103,4 +106,8 @@ class ProductController extends ChangeNotifier {
     }
     return count;
   }
+
+   static List<Product> list = [];
+
+
 }

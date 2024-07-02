@@ -1,24 +1,24 @@
-import 'package:application/controllers/auth_firebase_controller.dart';
+import 'package:application/services/firebase_auth_services.dart';
 import 'package:application/views/screens/home_screen.dart';
 import 'package:application/views/screens/sign_up_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-class LogInScreen extends StatefulWidget {
-  const LogInScreen({super.key});
+class SignInScreen extends StatefulWidget {
+  const SignInScreen({super.key});
 
   @override
-  State<LogInScreen> createState() => _LogInScreenState();
+  State<SignInScreen> createState() => _SignInScreenState();
 }
 
-class _LogInScreenState extends State<LogInScreen> {
-  AuthFirebaseController firebaseAuthServices = AuthFirebaseController();
+class _SignInScreenState extends State<SignInScreen> {
+  FirebaseAuthServices firebaseAuthServices = FirebaseAuthServices();
   final _formKey = GlobalKey<FormState>();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
 
   void checkSignIn() async {
-    var x = await firebaseAuthServices.login(
+    var x = await firebaseAuthServices.signIn(
         _emailController.text, _passwordController.text);
      x? Navigator.pushReplacement(
         context, MaterialPageRoute(builder: (context) => const HomeScreen())): print('error');
