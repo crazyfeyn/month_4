@@ -4,6 +4,7 @@ import 'package:flutter_application/controllers/product_controller.dart';
 import 'package:flutter_application/models/product.dart';
 import 'package:flutter_application/services/product_services.dart';
 import 'package:flutter_application/views/screens/home_screen.dart';
+import 'package:flutter_application/views/widgets/edit_product.dart';
 import 'package:provider/provider.dart';
 
 // ignore: must_be_immutable
@@ -46,7 +47,20 @@ class AdminItem extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               IconButton(
-                onPressed: () {},
+                onPressed: () {
+                  showDialog(
+                      context: context,
+                      builder: (context) {
+                        return EditProduct(product: product);
+                      });
+                  // productController.updateProduct(
+                  //     product.id,
+                  //     product.category,
+                  //     product.imageUrl,
+                  //     product.isLiked,
+                  //     product.price,
+                  //     product.title);
+                },
                 icon: const Icon(
                   Icons.edit,
                   color: Colors.blue,

@@ -216,7 +216,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                         InkWell(
                                           onTap: () {
                                             productController
-                                                .toggleFavorite(product);
+                                                .toggleFavorite(product.id);
                                           },
                                           child: CircleAvatar(
                                             child: Icon(

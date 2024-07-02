@@ -180,8 +180,8 @@ class ProductDetailScreen extends StatelessWidget {
               ),
             ),
             InkWell(
-              onTap: () {
-                productController.toggleFavorite(product);
+              onTap: () async {
+                productController.toggleFavorite(product.id);
               },
               child: Container(
                 width: 50,

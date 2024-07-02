@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application/models/product.dart';
 import 'package:flutter_application/services/product_services.dart';
@@ -92,11 +91,6 @@ class ProductController extends ChangeNotifier {
     return _productList;
   }
 
-  void toggleFavorite(Product product) {
-    product.isLiked = !product.isLiked;
-    notifyListeners();
-  }
-
   int productCategoryCount(String category) {
     int count = 0;
     for (var element in _productList) {
@@ -105,5 +99,28 @@ class ProductController extends ChangeNotifier {
       }
     }
     return count;
+  }
+
+  void updateProduct(String id, String category, String imageUrl, bool isLiked,
+      double price, String title) {
+    productServices.updateProduct(id, category, imageUrl, price, title);
+    notifyListeners();
+  }
+
+  void addProduct(String category, String? imageUrl, double price, String title,
+      bool isLiked) {
+    productServices.addproduct(
+        category,
+        imageUrl ??
+            'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTb2V_TKpivveSXVmsG8_cgfajgK6k5E5bLqw&s',
+        price,
+        title,
+        isLiked);
+    notifyListeners();
+  }
+
+  void toggleFavorite(String id) {
+    productServices.toggleFavorite(id);
+    notifyListeners();
   }
 }

@@ -180,7 +180,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                               const Spacer(),
                               GestureDetector(
                                 onTap: () {
-                                  productController.toggleFavorite(product);
+                                  productController.toggleFavorite(product.id);
                                 },
                                 child: Container(
                                     width: 35,

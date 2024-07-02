@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:firebase_storage/firebase_storage.dart';
 
 
-class LocalStorageServirces {
+class LocalStorageServices {
   final imageStorage = FirebaseStorage.instance;
 
   Future<void> addImage(String name, File imageFile) async {

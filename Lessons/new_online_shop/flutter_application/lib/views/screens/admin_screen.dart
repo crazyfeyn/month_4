@@ -1,11 +1,8 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_application/controllers/product_controller.dart';
 import 'package:flutter_application/models/product.dart';
 import 'package:flutter_application/services/product_services.dart';
-import 'package:flutter_application/views/screens/home_screen.dart';
-import 'package:flutter_application/views/widgets/add_product.dart';
 import 'package:flutter_application/views/widgets/admin_item.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
@@ -21,6 +18,7 @@ class _AdminPanelState extends State<AdminPanel> {
   @override
   Widget build(BuildContext context) {
     // final productController = Provider.of<ProductController>(context);
+    final productController = ProductController();
     final productServices = ProductServices();
     String title = '';
     String price = '';
@@ -30,8 +28,7 @@ class _AdminPanelState extends State<AdminPanel> {
     void openGallery() async {
       final imagePicker = ImagePicker();
       final XFile? pickedImage = await imagePicker.pickImage(
-          source: ImageSource.gallery,
-          requestFullMetadata: false);
+          source: ImageSource.gallery, requestFullMetadata: false);
 
       if (pickedImage != null) {
         setState(() {
@@ -53,6 +50,21 @@ class _AdminPanelState extends State<AdminPanel> {
     }
 
     final _formKey = GlobalKey<FormState>();
+
+    void onSubmit() {
+      if (_formKey.currentState!.validate()) {
+        _formKey.currentState!.save();
+        productController.addProduct(
+            category, imageFile?.path, double.parse(price), title, false);
+        title = '';
+        price = '';
+        category = '';
+      } else {
+        print('error occured');
+      }
+
+      Navigator.of(context).pop();
+    }
 
     return Scaffold(
       appBar: AppBar(
@@ -164,9 +176,8 @@ class _AdminPanelState extends State<AdminPanel> {
                               },
                             ),
                             TextFormField(
-                              initialValue: price,
+                              initialValue: category,
                               textInputAction: TextInputAction.next,
-                              keyboardType: TextInputType.number,
                               decoration: const InputDecoration(
                                 border: OutlineInputBorder(),
                                 labelText: 'Category',
@@ -175,12 +186,6 @@ class _AdminPanelState extends State<AdminPanel> {
                                 if (value == null || value.trim().isEmpty) {
                                   return "Please, enter category of product";
                                 }
-                                try {
-                                  double.parse(value);
-                                } catch (e) {
-                                  return "Please, enter category of product";
-                                }
-                                return null;
                               },
                               onSaved: (newValue) {
                                 if (newValue != null) {
@@ -188,6 +193,11 @@ class _AdminPanelState extends State<AdminPanel> {
                                 }
                               },
                             ),
+                            FilledButton(
+                                onPressed: () {
+                                  onSubmit();
+                                },
+                                child: Text('Add'))
                           ],
                         ),
                       ),
