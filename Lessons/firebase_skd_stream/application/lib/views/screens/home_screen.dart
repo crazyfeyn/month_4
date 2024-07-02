@@ -48,11 +48,11 @@ class _HomeScreenState extends State<HomeScreen> {
             }
 
             return Stack(children: [
-              Positioned(
-                child:
-                     Image.asset('assets/images/duolingo.gif',
-                        height: 100, width: 100)
-              ),
+              // Positioned(
+              //   child:
+              //        Image.asset('assets/images/duolingo.gif',
+              //           height: 100, width: 100)
+              // ),
               PageView.builder(
                 controller: pageController,
                 scrollDirection: Axis.vertical,
@@ -126,11 +126,11 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                           ),
                         ),
-                        SizedBox(height: 20),
-                        quizesController.correctResponses.length >=
-                                quizesController.incorrectResponses.length
-                            ? Image.asset('assets/images/strong.gif', height: 300)
-                            : Image.asset('assets/images/sad.gif', height: 400),
+                        // const SizedBox(height: 20),
+                        // quizesController.correctResponses.length >=
+                        //         quizesController.incorrectResponses.length
+                        //     ? Image.asset('assets/images/strong.gif', height: 300)
+                        //     : Image.asset('assets/images/sad.gif', height: 400),
                         const SizedBox(height: 20),
                         InkWell(
                             onTap: () {

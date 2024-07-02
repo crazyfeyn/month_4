@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "575904097696",
+    "project_id": "auth-test-ea03e",
+    "storage_bucket": "auth-test-ea03e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:575904097696:android:e1d6163e5323919047b0c5",
+        "android_client_info": {
+          "package_name": "com.example.application"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC-0Eyxy9P85TCwqE5iNWDKKaacL6vE8Gk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
