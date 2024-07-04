@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_application/models/product.dart';
 import 'package:flutter_application/services/product_services.dart';
@@ -101,7 +103,7 @@ class ProductController extends ChangeNotifier {
     return count;
   }
 
-  void updateProduct(String id, String category, String imageUrl, bool isLiked,
+  void updateProduct(String id, String category, File imageUrl, bool isLiked,
       double price, String title) {
     productServices.updateProduct(id, category, imageUrl, price, title);
     notifyListeners();

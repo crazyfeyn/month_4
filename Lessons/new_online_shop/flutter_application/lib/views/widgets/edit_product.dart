@@ -57,14 +57,13 @@ class _EditProductState extends State<EditProduct> {
     void onSubmit() async {
       String imageUrl = widget.product.imageUrl;
       if (imageFile != null) {
-        // Here you can add logic to upload the image and get its URL if needed
         imageUrl = imageFile!.path;
       }
 
       productController.updateProduct(
         widget.product.id,
         widget.product.category,
-        imageUrl,
+        imageFile!,
         false,
         double.parse(priceController.text),
         titleController.text,
