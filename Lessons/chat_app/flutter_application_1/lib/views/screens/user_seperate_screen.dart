@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/services/firebase_servrices.dart';
+import 'package:flutter_application_1/views/widgets/send_image.dart';
 
 class UserSeperateScreen extends StatefulWidget {
   final String senderId;
@@ -53,13 +54,13 @@ class _UserSeperateScreenState extends State<UserSeperateScreen> {
           onPressed: () {
             Navigator.of(context).pop();
           },
-          icon: Icon(Icons.arrow_back_ios),
+          icon: const Icon(Icons.arrow_back_ios),
         ),
-        title: Text('justSooth'),
+        title: const Text('Profile'),
         actions: [
           IconButton(
             onPressed: () {},
-            icon: Icon(Icons.search),
+            icon: const Icon(Icons.search),
           ),
         ],
       ),
@@ -70,7 +71,7 @@ class _UserSeperateScreenState extends State<UserSeperateScreen> {
         ),
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(
+            return const Center(
               child: CircularProgressIndicator(),
             );
           }
@@ -81,12 +82,6 @@ class _UserSeperateScreenState extends State<UserSeperateScreen> {
             );
           }
 
-          if (snapshot.data == null || snapshot.data!.docs.isEmpty) {
-            return Center(
-              child: Text('No messages'),
-            );
-          }
-
           return Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -94,23 +89,37 @@ class _UserSeperateScreenState extends State<UserSeperateScreen> {
                 child: ListView.builder(
                   itemCount: snapshot.data!.docs.length,
                   itemBuilder: (BuildContext context, int index) {
+                    String info = snapshot.data!.docs[index]['message'];
                     // widget.senderId ==
                     //     snapshot.data!.docs[index]['sender_id']?
                     return Padding(
-                      padding: EdgeInsets.all(20),
+                      padding: const EdgeInsets.all(20),
                       child: Row(
                         mainAxisAlignment: widget.senderId ==
                                 snapshot.data!.docs[index]['sender_id']
-                            ? MainAxisAlignment.start
-                            : MainAxisAlignment.end,
+                            ? MainAxisAlignment.end
+                            : MainAxisAlignment.start,
                         children: [
-                          Container(
-                            padding: EdgeInsets.all(10),
-                            decoration: BoxDecoration(
-                                color: Colors.blue,
-                                borderRadius: BorderRadius.circular(10)),
-                            child: Text(snapshot.data!.docs[index]['message']),
-                          ),
+                          info.contains(
+                                  'https://firebasestorage.googleapis.com')
+                              ? Container(
+                                  height: 200,
+                                  width: 200,
+                                  clipBehavior: Clip.hardEdge,
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(13)),
+                                  child: Image.network(
+                                    info,
+                                    fit: BoxFit.cover,
+                                  ),
+                                )
+                              : Container(
+                                  padding: const EdgeInsets.all(10),
+                                  decoration: BoxDecoration(
+                                      color: Colors.blue,
+                                      borderRadius: BorderRadius.circular(10)),
+                                  child: Text(info),
+                                ),
                         ],
                       ),
                     );
@@ -124,8 +133,15 @@ class _UserSeperateScreenState extends State<UserSeperateScreen> {
                   child: Row(
                     children: [
                       IconButton(
-                        onPressed: () {},
-                        icon: Icon(CupertinoIcons.add),
+                        onPressed: () {
+                          showDialog(
+                              context: context,
+                              builder: (context) => SendImage(
+                                  chrId: widget.chrId,
+                                  receiverId: widget.receiverId,
+                                  senderId: widget.senderId));
+                        },
+                        icon: const Icon(CupertinoIcons.add),
                       ),
                       Expanded(
                         child: TextFormField(
@@ -149,7 +165,7 @@ class _UserSeperateScreenState extends State<UserSeperateScreen> {
                             messageEditingController.clear();
                           }
                         },
-                        icon: Icon(Icons.send),
+                        icon: const Icon(Icons.send),
                       ),
                     ],
                   ),
