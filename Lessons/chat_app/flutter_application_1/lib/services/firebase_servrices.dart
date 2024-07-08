@@ -10,7 +10,7 @@ class FirebaseServices {
       FirebaseFirestore.instance.collection('users');
   final CollectionReference<Map<String, dynamic>> _chatCollection =
       FirebaseFirestore.instance.collection('chat_rooms');
-  
+
   final firebaseStorage = FirebaseStorage.instance;
 
   Stream<QuerySnapshot> getUsers() async* {
@@ -55,16 +55,13 @@ class FirebaseServices {
     yield* _chatCollection
         .doc(sortedList.join(''))
         .collection('messages')
-        .orderBy('timestamp', descending: false)
+        .orderBy('timestamp')
         .snapshots();
   }
 
-  
-
-  void startImageMessage(String receiverId, String senderId, String chrId,  File imageFile) async {
-    if (receiverId.isEmpty ||
-        senderId.isEmpty ||
-        chrId.isEmpty) {
+  Future<void> startImageMessage(
+      String receiverId, String senderId, String chrId, File imageFile) async {
+    if (receiverId.isEmpty || senderId.isEmpty || chrId.isEmpty) {
       return;
     }
     final imageReference = firebaseStorage
@@ -86,8 +83,6 @@ class FirebaseServices {
         'message': imageUrl,
       };
       await _chatCollection.doc(chrId).collection('messages').add(data);
-
-      
     });
   }
 }

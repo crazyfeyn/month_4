@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/services/firebase_servrices.dart';
@@ -30,10 +29,19 @@ class UserSeperateScreen extends StatefulWidget {
 class _UserSeperateScreenState extends State<UserSeperateScreen> {
   final _formKey = GlobalKey<FormState>();
   final messageEditingController = TextEditingController();
+  final ScrollController _scrollController = ScrollController();
+  bool isDonwloaded = true;
+
+  void donwloadedImage() {
+    setState(() {
+      isDonwloaded = false;
+    });
+  }
 
   @override
   void dispose() {
     messageEditingController.dispose();
+    _scrollController.dispose();
     super.dispose();
   }
 
@@ -44,25 +52,34 @@ class _UserSeperateScreenState extends State<UserSeperateScreen> {
       widget.chrId,
       message,
     );
+    _scrollToBottom();
+  }
+
+  void _scrollToBottom() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (_scrollController.hasClients) {
+        _scrollController.jumpTo(_scrollController.position.maxScrollExtent);
+      }
+    });
   }
 
   @override
   Widget build(BuildContext context) {
+    donwloadedImage();
     return Scaffold(
+      backgroundColor: const Color(0xFF1C1F2A),
       appBar: AppBar(
+        backgroundColor: const Color(0xFF1C1F2A),
         leading: IconButton(
           onPressed: () {
             Navigator.of(context).pop();
           },
-          icon: const Icon(Icons.arrow_back_ios),
+          icon: const Icon(Icons.arrow_back_ios, color: Colors.white),
         ),
-        title: const Text('Profile'),
-        actions: [
-          IconButton(
-            onPressed: () {},
-            icon: const Icon(Icons.search),
-          ),
-        ],
+        title: Text(
+          widget.receiverEmail,
+          style: const TextStyle(color: Colors.white),
+        ),
       ),
       body: StreamBuilder(
         stream: widget.firebaseServices.getActiveChats(
@@ -82,16 +99,19 @@ class _UserSeperateScreenState extends State<UserSeperateScreen> {
             );
           }
 
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            _scrollToBottom();
+          });
+
           return Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Expanded(
                 child: ListView.builder(
+                  controller: _scrollController,
                   itemCount: snapshot.data!.docs.length,
                   itemBuilder: (BuildContext context, int index) {
                     String info = snapshot.data!.docs[index]['message'];
-                    // widget.senderId ==
-                    //     snapshot.data!.docs[index]['sender_id']?
                     return Padding(
                       padding: const EdgeInsets.all(20),
                       child: Row(
@@ -100,26 +120,30 @@ class _UserSeperateScreenState extends State<UserSeperateScreen> {
                             ? MainAxisAlignment.end
                             : MainAxisAlignment.start,
                         children: [
-                          info.contains(
-                                  'https://firebasestorage.googleapis.com')
-                              ? Container(
-                                  height: 200,
-                                  width: 200,
-                                  clipBehavior: Clip.hardEdge,
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(13)),
-                                  child: Image.network(
-                                    info,
-                                    fit: BoxFit.cover,
-                                  ),
-                                )
-                              : Container(
-                                  padding: const EdgeInsets.all(10),
-                                  decoration: BoxDecoration(
-                                      color: Colors.blue,
-                                      borderRadius: BorderRadius.circular(10)),
-                                  child: Text(info),
-                                ),
+                          isDonwloaded
+                              ? const CircularProgressIndicator()
+                              : info.contains(
+                                      'https://firebasestorage.googleapis.com')
+                                  ? Container(
+                                      height: 200,
+                                      width: 200,
+                                      clipBehavior: Clip.hardEdge,
+                                      decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(13)),
+                                      child: Image.network(
+                                        info,
+                                        fit: BoxFit.cover,
+                                      ),
+                                    )
+                                  : Container(
+                                      padding: const EdgeInsets.all(10),
+                                      decoration: BoxDecoration(
+                                          color: Colors.blue,
+                                          borderRadius:
+                                              BorderRadius.circular(10)),
+                                      child: Text(info),
+                                    ),
                         ],
                       ),
                     );
@@ -133,23 +157,27 @@ class _UserSeperateScreenState extends State<UserSeperateScreen> {
                   child: Row(
                     children: [
                       IconButton(
-                        onPressed: () {
+                        onPressed: () async {
                           showDialog(
                               context: context,
                               builder: (context) => SendImage(
-                                  chrId: widget.chrId,
-                                  receiverId: widget.receiverId,
-                                  senderId: widget.senderId));
+                                    chrId: widget.chrId,
+                                    receiverId: widget.receiverId,
+                                    senderId: widget.senderId,
+                                  ));
                         },
-                        icon: const Icon(CupertinoIcons.add),
+                        icon:
+                            const Icon(CupertinoIcons.add, color: Colors.white),
                       ),
                       Expanded(
                         child: TextFormField(
                           controller: messageEditingController,
                           decoration: const InputDecoration(
-                            border: OutlineInputBorder(),
-                            hintText: 'Enter your message',
-                          ),
+                              focusColor: Colors.white,
+                              border: OutlineInputBorder(),
+                              hintText: 'Enter your message',
+                              hintStyle: TextStyle(color: Colors.white)),
+                          style: const TextStyle(color: Colors.white),
                           validator: (value) {
                             if (value == null || value.isEmpty) {
                               return 'Please enter a message';
@@ -165,7 +193,7 @@ class _UserSeperateScreenState extends State<UserSeperateScreen> {
                             messageEditingController.clear();
                           }
                         },
-                        icon: const Icon(Icons.send),
+                        icon: const Icon(Icons.send, color: Colors.white),
                       ),
                     ],
                   ),

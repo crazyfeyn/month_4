@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "234672223669",
+    "project_id": "dars71-push-notification-0000",
+    "storage_bucket": "dars71-push-notification-0000.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:234672223669:android:fb5c8298cd6ba4e57155fc",
+        "android_client_info": {
+          "package_name": "com.example.dars71_pushnotification"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAP6WLznfilJzS4FITJasnd6lUm3sOMkpE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

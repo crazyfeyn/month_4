@@ -13,7 +13,7 @@ class SendImage extends StatefulWidget {
       {super.key,
       required this.chrId,
       required this.receiverId,
-      required this.senderId});
+      required this.senderId,});
 
   @override
   State<SendImage> createState() => _SendImageState();
@@ -22,6 +22,11 @@ class SendImage extends StatefulWidget {
 class _SendImageState extends State<SendImage> {
   final firebaseServices = FirebaseServices();
   File? imageFile;
+
+  Future<void> awaitUntillSend() async {
+    await firebaseServices.startImageMessage(
+        widget.receiverId, widget.senderId, widget.chrId, imageFile!);
+  }
 
   void openGallery() async {
     final imagePicker = ImagePicker();
@@ -105,8 +110,8 @@ class _SendImageState extends State<SendImage> {
         FilledButton(
           onPressed: () {
             if (imageFile != null) {
-              firebaseServices.startImageMessage(
-                  widget.receiverId, widget.senderId, widget.chrId, imageFile!);
+              Navigator.of(context).pop();
+              awaitUntillSend();
             }
           },
           child: const Text("Send"),
