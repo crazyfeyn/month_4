@@ -14,7 +14,6 @@ class _HomeScreenState extends State<HomeScreen> {
   late YandexMapController mapController;
   List<MapObject>? polylines;
   List<SearchItem> searchResults = [];
-  
 
   Point myCurrentLocation = const Point(
     latitude: 41.2856806,
@@ -83,7 +82,7 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   void selectLocation(SearchItem item) {
-    
+    print(item.geometry);
   }
 
   @override
@@ -185,35 +184,28 @@ class _HomeScreenState extends State<HomeScreen> {
                         showModalBottomSheet(
                           context: context,
                           builder: (context) {
-                            return Container(
-                              padding: EdgeInsets.only(top: 12),
-                              decoration: BoxDecoration(
-                                  color: Color(0xFF1B1C1F),
-                                  borderRadius: BorderRadius.only(
-                                      topLeft: Radius.circular(20),
-                                      topRight: Radius.circular(20))),
-                              child: Column(
-                                children: [
-                                  Expanded(
-                                    child: ListView.builder(
-                                      shrinkWrap: true,
-                                      itemCount: searchResults.length,
-                                      itemBuilder: (context, index) {
-                                        final item = searchResults[index];
-                                        return ListTile(
-                                          title: Text(
-                                            item.name,
-                                            style: TextStyle(
-                                                color: Colors.white,
-                                                fontWeight: FontWeight.w500),
-                                          ),
-                                          onTap: () => selectLocation(item),
-                                        );
-                                      },
-                                    ),
+                            return Column(
+                              children: [
+                                Expanded(
+                                  child: ListView.builder(
+                                    itemCount: searchResults.length,
+                                    itemBuilder: (context, index) {
+                                      final item = searchResults[index];
+                                      return ListTile(
+                                        title: Text(
+                                          item.name,
+                                          style: TextStyle(
+                                              color: Colors.black,
+                                              fontWeight: FontWeight.w500),
+                                        ),
+                                        onTap: () {
+                                          selectLocation(item);
+                                        },
+                                      );
+                                    },
                                   ),
-                                ],
-                              ),
+                                ),
+                              ],
                             );
                           },
                         );
@@ -245,3 +237,12 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 }
+
+
+
+//  padding: EdgeInsets.only(top: 12),
+//                               decoration: BoxDecoration(
+//                                   color: Color(0xFF1B1C1F),
+//                                   borderRadius: BorderRadius.only(
+//                                       topLeft: Radius.circular(20),
+//                                       topRight: Radius.circular(20))),
