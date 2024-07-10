@@ -82,7 +82,7 @@ class _HomeScreenState extends State<HomeScreen> {
       );
 
       myPositions.add(myLocation);
-
+      //!   ---- loook at it
       if (myPositions.length >= 2) {
         transportOptionSelected('driving');
       }
@@ -226,6 +226,9 @@ class _HomeScreenState extends State<HomeScreen> {
             : Stack(
                 children: [
                   GoogleMap(
+                    liteModeEnabled: true,
+                    myLocationButtonEnabled: true,
+                    myLocationEnabled: true,
                     compassEnabled: true,
                     trafficEnabled: true,
                     onMapCreated: _onMapCreated,

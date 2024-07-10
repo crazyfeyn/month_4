@@ -59,7 +59,6 @@ class LocationService {
       LatLng from, LatLng to, String transportOption) async {
     final polylinePoints = PolylinePoints();
 
-    // Determine the travel mode based on the transportOption parameter
     TravelMode travelMode;
     switch (transportOption) {
       case 'walking':
