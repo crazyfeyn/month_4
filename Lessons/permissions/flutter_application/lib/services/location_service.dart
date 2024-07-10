@@ -1,3 +1,5 @@
+import 'package:flutter_polyline_points/flutter_polyline_points.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 
 class LocationService {
@@ -21,7 +23,6 @@ class LocationService {
   //gps yoqilganmi tekshiramiz
   static Future<void> _checkService() async {
     _isServiceEnabled = await _location.serviceEnabled();
-
     if (!_isServiceEnabled) {
       _isServiceEnabled = await _location.requestService();
       if (!_isServiceEnabled) {
@@ -43,6 +44,8 @@ class LocationService {
   }
 
   static Future<void> getCurrentLocation() async {
+    await _checkService();
+    await checkPermission();
     if (_isServiceEnabled && permissionStatus == PermissionStatus.granted) {
       currentLocation = await _location.getLocation();
     }
@@ -50,5 +53,44 @@ class LocationService {
 
   static Stream<LocationData> getLiveLocation() async* {
     yield* _location.onLocationChanged;
+  }
+
+  static Future<List<LatLng>> fetchPolylinePoints(
+      LatLng from, LatLng to, String transportOption) async {
+    final polylinePoints = PolylinePoints();
+
+    // Determine the travel mode based on the transportOption parameter
+    TravelMode travelMode;
+    switch (transportOption) {
+      case 'walking':
+        travelMode = TravelMode.walking;
+        break;
+      case 'bicycling':
+        travelMode = TravelMode.bicycling;
+        break;
+      case 'transit':
+        travelMode = TravelMode.transit;
+        break;
+      case 'driving':
+      default:
+        travelMode = TravelMode.driving;
+        break;
+    }
+
+    var result = await polylinePoints.getRouteBetweenCoordinates(
+      googleApiKey: "AIzaSyBEjfX9jrWudgRcWl2scld4R7s0LtlaQmQ",
+      request: PolylineRequest(
+        origin: PointLatLng(from.latitude, from.longitude),
+        destination: PointLatLng(to.latitude, to.longitude),
+        mode: travelMode,
+      ),
+    );
+
+    if (result.points.isNotEmpty) {
+      return result.points
+          .map((point) => LatLng(point.latitude, point.longitude))
+          .toList();
+    }
+    return [];
   }
 }

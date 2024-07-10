@@ -4,6 +4,7 @@ import 'package:flutter_application/controllers/firebase_controller.dart';
 import 'package:flutter_application/model/trip.dart';
 import 'package:flutter_application/services/location_service.dart';
 import 'package:flutter_application/views/widgets/add_story.dart';
+import 'package:transparent_image/transparent_image.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -83,9 +84,12 @@ class _HomeScreenState extends State<HomeScreen> {
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(20),
                               image: DecorationImage(
-                                  image: NetworkImage(data[index].imageUrl),
+                                  image: FadeInImage.memoryNetwork(
+                                          image: data[index].imageUrl,
+                                          placeholder: kTransparentImage)
+                                      .image,
                                   fit: BoxFit.cover,
-                                  filterQuality: FilterQuality.medium)),
+                                  filterQuality: FilterQuality.low)),
                           child: Padding(
                             padding: const EdgeInsets.all(10),
                             child: Column(
