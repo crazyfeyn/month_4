@@ -22,6 +22,10 @@ class _HomeScreenState extends State<HomeScreen> {
             latitude: double.parse(value.latitude.toString()),
             longitude: double.parse(value.longitude.toString()),
           );
+          exactCurrentLocation = Point(
+            latitude: double.parse(value.latitude.toString()),
+            longitude: double.parse(value.longitude.toString()),
+          );
         });
         mapController.moveCamera(
           CameraUpdate.newCameraPosition(
@@ -41,11 +45,26 @@ class _HomeScreenState extends State<HomeScreen> {
   List<MapObject>? polylines;
   List<SearchItem> searchResults = [];
   Point? myCurrentLocation;
+  Point? exactCurrentLocation;
 
   Point najotTalim = const Point(
     latitude: 41.2856806,
     longitude: 69.2034646,
   );
+
+  void centerLocation() {
+    mapController.moveCamera(
+      CameraUpdate.newCameraPosition(
+        CameraPosition(
+          target:
+              exactCurrentLocation ?? const Point(latitude: 0, longitude: 0),
+          zoom: 20,
+        ),
+      ),
+      animation:
+          const MapAnimation(type: MapAnimationType.smooth, duration: 1.5),
+    );
+  }
 
   void onMapCreated(YandexMapController controller) {
     mapController = controller;
@@ -86,7 +105,6 @@ class _HomeScreenState extends State<HomeScreen> {
         searchResults = searchResult.items ?? [];
       });
     } catch (e) {
-      print('Error retrieving search results: $e');
       setState(() {
         searchResults = [];
       });
@@ -192,6 +210,23 @@ class _HomeScreenState extends State<HomeScreen> {
                           Icons.remove,
                           color: Color(0xFFCCCCCE),
                           size: 30,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 15),
+                    GestureDetector(
+                      onTap: () => centerLocation(),
+                      child: Container(
+                        padding: const EdgeInsets.all(7),
+                        width: 57,
+                        height: 57,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20),
+                            color: const Color(0xFF191F1D)),
+                        child: const Icon(
+                          Icons.navigation_rounded,
+                          color: Color(0xFF3D7DFF),
+                          size: 35,
                         ),
                       ),
                     ),
