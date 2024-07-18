@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/controller/event_controller.dart';
+import 'package:flutter_application_1/controller/register_event_controller.dart';
 import 'package:flutter_application_1/firebase_options.dart';
 import 'package:flutter_application_1/controller/auth_controller.dart';
 import 'package:flutter_application_1/services/location_services.dart';
@@ -34,7 +35,11 @@ class _MyAppState extends State<MyApp> {
           }),
           ChangeNotifierProvider(create: (context) {
             return EventController();
-          })
+          }),
+          ChangeNotifierProvider(create: (context) {
+            return RegisterEventController();
+          }),
+          
         ],
         builder: (context, child) {
           return ScreenUtilInit(
@@ -49,7 +54,7 @@ class _MyAppState extends State<MyApp> {
                       if (snapshot.hasData) {
                         return const HomeScreen();
                       } else {
-                      return  const SignInScreen();
+                        return const SignInScreen();
                       }
                     })),
           );

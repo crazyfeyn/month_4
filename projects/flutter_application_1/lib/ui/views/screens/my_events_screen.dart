@@ -1,15 +1,12 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/controller/event_controller.dart';
-import 'package:flutter_application_1/models/event_model.dart';
 import 'package:flutter_application_1/models/user_model.dart';
-import 'package:flutter_application_1/ui/views/functions/getDate.dart';
 import 'package:flutter_application_1/ui/views/widgets/add_event_widget.dart';
 import 'package:flutter_application_1/ui/views/widgets/drawer_widget.dart';
-import 'package:flutter_application_1/ui/views/widgets/edit_event_widget.dart';
 import 'package:flutter_application_1/ui/views/widgets/organized_widget.dart';
+import 'package:flutter_application_1/ui/views/widgets/participated_events_widget.dart';
+import 'package:flutter_application_1/ui/views/widgets/recent_participated_events_widget.dart';
 import 'package:flutter_application_1/utils/app_constanst.dart';
-import 'package:provider/provider.dart';
 
 class MyEventsScreen extends StatefulWidget {
   final UserModel currentUserData;
@@ -23,7 +20,7 @@ class _MyEventsScreenState extends State<MyEventsScreen> {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: 4,
+      length: 3,
       child: Scaffold(
         appBar: AppBar(
           centerTitle: true,
@@ -42,20 +39,18 @@ class _MyEventsScreenState extends State<MyEventsScreen> {
             tabAlignment: TabAlignment.start,
             isScrollable: true,
             tabs: const [
-              Tab(text: 'Tashkil qilinganlarim'),
-              Tab(text: 'Yaqinda'),
-              Tab(text: 'Ishtirok etganlarim'),
-              Tab(text: 'Bekor qilinganlar'),
+              Tab(text: 'Orginized event'),
+              Tab(text: 'Recent'),
+              Tab(text: 'Participated by me'),
             ],
           ),
         ),
         drawer: DrawerWidget(currentUserData: widget.currentUserData),
-        body: TabBarView(
+        body: const TabBarView(
           children: [
             OrganizedWidget(),
-            PlaceholderWidget(label: 'Yaqinda'),
-            PlaceholderWidget(label: 'Ishtirok etganlarim'),
-            PlaceholderWidget(label: 'Bekor qilinganlar'),
+            RecentParticipatedEventsWidget(),
+            ParticipatedEventsWidget(),
           ],
         ),
         floatingActionButton: FloatingActionButton(

@@ -70,39 +70,6 @@ class DrawerWidget extends StatelessWidget {
                       trailing: const Icon(CupertinoIcons.right_chevron),
                     ),
                   ),
-                  InkWell(
-                    onTap: () {},
-                    child: ListTile(
-                      leading: const Icon(CupertinoIcons.person_crop_circle),
-                      title: Text(
-                        'Profile info',
-                        style: AppConstants.drawerTextStyle,
-                      ),
-                      trailing: const Icon(CupertinoIcons.right_chevron),
-                    ),
-                  ),
-                  InkWell(
-                    onTap: () {},
-                    child: ListTile(
-                      leading: const Icon(Icons.translate),
-                      title: Text(
-                        'Change language',
-                        style: AppConstants.drawerTextStyle,
-                      ),
-                      trailing: const Icon(CupertinoIcons.right_chevron),
-                    ),
-                  ),
-                  InkWell(
-                    onTap: () {},
-                    child: ListTile(
-                      leading: const Icon(Icons.light_mode_rounded),
-                      title: Text(
-                        'Light / dark mode',
-                        style: AppConstants.drawerTextStyle,
-                      ),
-                      trailing: const Icon(CupertinoIcons.right_chevron),
-                    ),
-                  )
                 ],
               ),
               ListTile(

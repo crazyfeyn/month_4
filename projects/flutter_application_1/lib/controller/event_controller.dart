@@ -1,12 +1,10 @@
 import 'dart:io';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/models/event_model.dart';
 import 'package:flutter_application_1/services/firebase_event_services.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:provider/provider.dart';
 
 class EventController extends ChangeNotifier {
   final firebaseEventServices = FirebaseEventServices();
@@ -59,7 +57,7 @@ class EventController extends ChangeNotifier {
     return firebaseEventServices.getRecentSevenDaysEvents();
   }
 
-  void toggleLike(EventModel event, BuildContext context)  {
+  void toggleLike(EventModel event, BuildContext context) {
     final userId = FirebaseAuth.instance.currentUser!.uid;
     final isLiked = event.likedUsers.contains(userId);
 
@@ -76,5 +74,18 @@ class EventController extends ChangeNotifier {
     }
 
     notifyListeners();
+  }
+
+  Future<void> addParticipant(
+      Map<String, int> participants, String eventId) async {
+    return firebaseEventServices.addParticipant(participants, eventId);
+  }
+
+  Stream<QuerySnapshot> participatedEvents(String userId) {
+    return firebaseEventServices.participatedEvents(userId);
+  }
+
+  Future<QuerySnapshot> getRecentSevenDaysEventsByIndividuallyParticipated(String userId) {
+    return firebaseEventServices.getRecentSevenDaysEventsByIndividuallyParticipated(userId);
   }
 }

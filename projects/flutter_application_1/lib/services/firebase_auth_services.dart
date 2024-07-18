@@ -2,7 +2,6 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:flutter_application_1/models/user_model.dart';
 
 class FirebaseAuthServices {
   final FirebaseStorage firebaseStorage = FirebaseStorage.instance;

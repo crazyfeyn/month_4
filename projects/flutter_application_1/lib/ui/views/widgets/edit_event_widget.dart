@@ -1,13 +1,10 @@
 import 'dart:io';
-
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_application_1/controller/event_controller.dart';
-import 'package:flutter_application_1/services/firebase_event_services.dart';
 import 'package:flutter_application_1/services/location_services.dart';
 import 'package:flutter_application_1/ui/views/functions/locationFinder.dart';
 import 'package:flutter_application_1/utils/app_constanst.dart';

@@ -41,7 +41,8 @@ class FirebaseEventServices {
             : null,
         'imageUrl': imageUrl,
         'locationName': locationName ?? '',
-        'LikedUsers': []
+        'LikedUsers': [],
+        'participants': {}
       });
     } catch (e) {
       rethrow;
@@ -138,15 +139,61 @@ class FirebaseEventServices {
   }
 
   Stream<QuerySnapshot> getRecentSevenDaysEvents() {
-    try {
-      DateTime today = DateTime.now();
-      DateTime sevenDaysAgo = today.subtract(Duration(days: 7));
+    DateTime today = DateTime.now();
+    DateTime sevenDaysAgo = today.subtract(Duration(days: 7));
 
-      return eventCollection
-          .where('dateTime', isGreaterThanOrEqualTo: Timestamp.fromDate(sevenDaysAgo))
+    return eventCollection
+        .where('dateTime',
+            isGreaterThanOrEqualTo: Timestamp.fromDate(sevenDaysAgo))
+        .snapshots();
+  }
+
+  Future<QuerySnapshot> getRecentSevenDaysEventsByIndividuallyParticipated(
+      String userId) async {
+    DateTime today = DateTime.now();
+    DateTime sevenDaysAgo = today.subtract(Duration(days: 7));
+
+    return await eventCollection
+        .where('dateTime',
+            isGreaterThanOrEqualTo: Timestamp.fromDate(sevenDaysAgo))
+        .where('participants.$userId', isGreaterThan: 0)
+        .get();
+  }
+
+  Future<void> addParticipant(
+      Map<String, int> participants, String eventId) async {
+    try {
+      var querySnapshot = await FirebaseFirestore.instance
+          .collection('events')
+          .where('eventId', isEqualTo: eventId)
           .get();
+
+      var realEventId = querySnapshot.docs.first;
+
+      var doc = await eventCollection.doc(realEventId.id).get();
+      Map<String, int> existingParticipants =
+          Map<String, int>.from(doc['participants'] ?? {});
+
+      participants.forEach((key, value) {
+        if (existingParticipants.containsKey(key)) {
+          existingParticipants[key] = existingParticipants[key]! + value;
+        } else {
+          existingParticipants[key] = value;
+        }
+      });
+
+      await eventCollection
+          .doc(realEventId.id)
+          .update({'participants': existingParticipants});
     } catch (e) {
       rethrow;
     }
   }
+
+  Stream<QuerySnapshot> participatedEvents(String userId) {
+    return eventCollection
+        .where('participants.$userId', isGreaterThan: 0)
+        .snapshots();
+  }
+
 }

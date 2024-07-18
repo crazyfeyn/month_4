@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
@@ -7,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_application_1/controller/event_controller.dart';
-import 'package:flutter_application_1/services/firebase_event_services.dart';
 import 'package:flutter_application_1/services/location_services.dart';
 import 'package:flutter_application_1/ui/views/functions/locationFinder.dart';
 import 'package:flutter_application_1/utils/app_constanst.dart';
@@ -46,9 +44,6 @@ class _AddEventWidgetState extends State<AddEventWidget> {
 
   void onCameraMove(CameraPosition position) async {
     currentLocation = position.target;
-    String locationName = await Locationfinder.getLocationName(
-        currentLocation!.latitude, currentLocation!.longitude);
-    print(locationName);
     setState(() {});
   }
 
@@ -131,7 +126,7 @@ class _AddEventWidgetState extends State<AddEventWidget> {
           _eventTime!.minute,
         ),
       );
-      String eventDescription = _eventDescController.text;
+      String eventDescription = _eventDescController.text.trim();
 
       context.read<EventController>().addEvent(
           eventTitle,

@@ -1,10 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/controller/auth_controller.dart';
 import 'package:flutter_application_1/models/user_model.dart';
+import 'package:flutter_application_1/ui/views/screens/main_screen.dart';
 import 'package:flutter_application_1/ui/views/widgets/drawer_widget.dart';
-import 'package:flutter_application_1/ui/views/screens/my_events_screen.dart';
 import 'package:provider/provider.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -42,9 +41,7 @@ class _HomeScreenState extends State<HomeScreen> {
         } else {
           final currentUserData =
               UserModel.fromDocumentSnapshot(snapshot.data!);
-          body = MyEventsScreen(
-            currentUserData: currentUserData,
-          );
+          body = MainScreen(currentUserData: currentUserData);
         }
 
         return Scaffold(

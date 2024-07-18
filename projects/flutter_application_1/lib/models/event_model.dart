@@ -10,6 +10,7 @@ class EventModel {
   String? imageUrl;
   String? locationName;
   List<dynamic> likedUsers;
+  Map<String, dynamic> participants;
 
   EventModel({
     required this.eventId,
@@ -21,6 +22,7 @@ class EventModel {
     required this.imageUrl,
     required this.locationName,
     required this.likedUsers,
+    required this.participants,
   });
 
   factory EventModel.fromDocumentSnapshot(DocumentSnapshot query) {
@@ -35,6 +37,9 @@ class EventModel {
         location: data['location'],
         imageUrl: data['imageUrl'],
         locationName: data['locationName'] ?? '',
-        likedUsers: data['LikedUsers']);
+        likedUsers: data['LikedUsers'],
+        participants: data['participants']);
   }
+
+  
 }
